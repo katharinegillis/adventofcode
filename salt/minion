@@ -1,0 +1,8 @@
+# Masterless minion setup
+file_client: local
+log_file: /var/log/salt/minion
+log_level_logfile: debug
+
+file_roots:
+  base:
+    - /srv/salt/roots

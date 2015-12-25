@@ -1,0 +1,5 @@
+# PHPStorm Project Files
+.idea
+
+# Vagrant box
+.vagrant
