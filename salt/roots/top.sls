@@ -2,3 +2,4 @@ base:
   '*':
     - nodejs
     - nginx
+    - misc

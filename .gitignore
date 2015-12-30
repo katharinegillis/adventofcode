@@ -9,3 +9,9 @@ webapp/node_modules
 
 # Log files
 webapp/logs/*.log
+
+# Bower components
+webapp/bower_components
+
+# Built files.
+webapp/public/js/vendor.js
