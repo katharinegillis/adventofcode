@@ -13,7 +13,7 @@ config  = require './config/config'
 
 # Create the server.
 app = express();
-port = process.env.PORT or 80
+port = process.env.PORT or 3000
 
 # Bootstrap the models.
 models = {}

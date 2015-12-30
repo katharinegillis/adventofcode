@@ -1,3 +1,4 @@
 base:
   '*':
-    - nodejs/init
+    - nodejs
+    - nginx

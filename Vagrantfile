@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
   config.vbguest.auto_update = false
 
   # Set up the networking.
-  config.vm.network "private_network", ip: "192.168.33.20"
+  config.vm.network "private_network", ip: "192.168.33.25"
   config.vm.hostname = "localdev.adventofcode.tichi.org"
 
   # Set up the shared web folder.

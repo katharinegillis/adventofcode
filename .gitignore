@@ -6,3 +6,6 @@
 
 # NodeJS modules
 webapp/node_modules
+
+# Log files
+webapp/logs/*.log
