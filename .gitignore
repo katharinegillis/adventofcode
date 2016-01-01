@@ -14,4 +14,4 @@ webapp/logs/*.log
 webapp/bower_components
 
 # Built files.
-webapp/public/js/vendor.js
+webapp/public/*

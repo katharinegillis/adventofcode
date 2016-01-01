@@ -1,0 +1,14 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server ipv6only=on;
+
+	location ~ ^/(js/|css/) {
+		root /home/vagrant/webapp/public;
+		access_log off;
+		expires max;
+	}
+
+	location / {
+  	proxy_pass http://127.0.0.1:3000;
+	}
+}

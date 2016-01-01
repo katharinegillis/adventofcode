@@ -1,0 +1,135 @@
+body {
+  background-color: @background-colour;
+  color: @text-colour;
+  font-family: "Source Code Pro", monospace;
+  font-size: 14pt;
+}
+
+header {
+  h1 {
+    display: inline-block;
+    margin: 0;
+    padding-right: 1em;
+
+    a {
+      display: inline-block;
+      color: @title-colour;
+      text-shadow: 0 0 2px @title-colour, 0 0 5px @title-colour;
+    }
+  }
+
+  .user {
+    display: inline-block;
+    padding: 0 0.5em;
+
+    .star-count {
+      color: @star-colour;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+pre {
+  display: block;
+  margin: 1em 0px 1em;
+  white-space: pre;
+  font-family: Source Code Pro, monospace;
+}
+
+.tree {
+  .tree-trunk {
+    color: @text-colour;
+  }
+
+  .tree-lightbeam {
+    visibility: hidden;
+    color: @dark-text-colour;
+  }
+
+  .tree-mark-complete {
+    visibility: hidden;
+    colour: @star-colour;
+  }
+
+  .tree-mark-verycomplete {
+    visibility: hidden;
+    colour: @star-colour;
+  }
+
+  a.tree-day25.tree-complete,
+  a.tree-day25.tree-verycomplete {
+    color: @star-colour;
+  }
+
+  a:hover {
+    background-color: @branch-background-colour;
+  }
+
+  a {
+    text-decoration: none;
+    outline: none;
+    padding: 0px 0.5em 0px 0.5em;
+    color: @dark-text-colour;
+
+    .tree-day {
+      color: @text-colour;
+    }
+  }
+
+  .tree-complete {
+    color: @button-colour;
+
+    .tree-lightbeam {
+      visibility: visible;
+      color: @dark-text-colour;
+    }
+
+    .tree-mark-complete {
+      visibility: visible;
+      color: @star-colour;
+    }
+  }
+
+  .tree-verycomplete {
+    color: @button-colour;
+
+    .tree-lightbeam {
+      visibility: visible;
+      color: @star-colour;
+    }
+
+    .tree-mark-complete {
+      visibility: visible;
+      color: @star-colour;
+    }
+
+    .tree-mark-verycomplete {
+      visibility: visible;
+      color: @star-colour;
+    }
+
+    .tree-ornament0 {
+      color: @blue-colour;
+    }
+
+    .tree-ornament1 {
+      color: @orange-colour;
+    }
+
+    .tree-ornament2 {
+      color: @red-colour;
+    }
+
+    .tree-ornament3 {
+      color: @star-colour;
+    }
+  }
+}

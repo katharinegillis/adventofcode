@@ -6,14 +6,13 @@
 gulp         = require 'gulp'
 gutil        = require 'gulp-util'
 gulpif       = require 'gulp-if'
-steramify    = require 'gulp-streamify'
+streamify    = require 'gulp-streamify'
 autoprefixer = require 'gulp-autoprefixer'
 cssmin       = require 'gulp-cssmin'
 less         = require 'gulp-less'
 concat       = require 'gulp-concat'
 plumber      = require 'gulp-plumber'
 source       = require 'vinyl-source-stream'
-coffee       = require 'gulp-coffee'
 browserify   = require 'browserify'
 watchify     = require 'watchify'
 uglify       = require 'gulp-uglify'
@@ -23,11 +22,7 @@ production = process.env.NODE_ENV is 'production'
 
 # List out the browser app dependencies.
 dependencies = [
-	'alt',
-	'react',
-	'react-dom',
-	'react-router',
-	'underscore'
+
 ]
 
 # Compile the third-party JS libraries into a single file.
@@ -38,3 +33,57 @@ gulp.task 'vendor', () ->
 	.pipe concat('vendor.js')
 	.pipe gulpif(production, uglify(mangle: false))
 	.pipe gulp.dest('public/js')
+
+# Bundle and minify the third-party JS libraries for faster performance.
+gulp.task 'browserify-vendor', () ->
+	return browserify()
+		.require dependencies
+		.bundle()
+		.pipe source('vendor.bundle.js')
+		.pipe gulpif(production, streamify(uglify(mangle: false)))
+		.pipe gulp.dest('public/js')
+
+# Compile the project files.
+gulp.task 'browserify', ['browserify-vendor'], () ->
+	return browserify 'app/main.cjsx'
+		.external dependencies
+		.transform 'coffee-reactify'
+		.bundle()
+		.pipe source('bundle.js')
+		.pipe gulpif(production, streamify(uglify(mangle: false)))
+		.pipe gulp.dest('public/js')
+
+# Compiles the project files and watches for changes and recompiles when changes happen.
+gulp.task 'browserify-watch', ['browserify-vendor'], () ->
+	rebundle = () ->
+		start = Date.now()
+		return bundler.bundle()
+		.on 'error', (err) ->
+			gutil.log gutil.colors.red(err.toString())
+		.on 'end', () ->
+			gutil.log gutil.colors.green('Finished rebundling in', (Date.now() - start) + 'ms.')
+		.pipe source('bundle.js')
+		.pipe gulp.dest('public/js')
+
+	bundler = watchify browserify('app/main.cjsx', watchify.args)
+	bundler.external dependencies
+	bundler.transform 'coffee-reactify'
+	bundler.on 'update', rebundle
+	return rebundle()
+
+# Compile the less stylesheets.
+gulp.task 'styles', () ->
+	return gulp.src 'app/stylesheets/main.less'
+		.pipe plumber()
+		.pipe less()
+		.pipe autoprefixer()
+		.pipe gulpif(production, cssmin())
+		.pipe gulp.dest('public/css')
+
+# Watch for changes in the less and recompile.
+gulp.task 'watch', () ->
+	gulp.watch 'app/stylesheets/**/*.less', ['styles']
+
+# Compiled tasks.
+gulp.task 'default', ['styles', 'vendor', 'browserify-watch', 'watch']
+gulp.task 'build', ['styles', 'vendor', 'browserify']

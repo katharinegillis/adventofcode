@@ -1,3 +1,3 @@
 misc_git_install:
-  pkg.install:
-    - name: git
+  pkg.installed:
+    - name: git-core
