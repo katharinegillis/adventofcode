@@ -1,7 +1,7 @@
 AppDispatcher     = require '../dispatcher/AppDispatcher.coffee'
 TreeConstants     = require '../constants/TreeConstants.coffee'
 TreeAPI           = require '../utils/TreeAPI.coffee'
-Promise          = require 'bluebird'
+Promise           = require 'bluebird'
 TreeServerActions = require '../actions/TreeServerActions.coffee'
 
 Promise.promisifyAll TreeAPI

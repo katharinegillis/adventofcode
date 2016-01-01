@@ -3,13 +3,14 @@ EventEmitter  = require('events').EventEmitter
 assign        = require 'object-assign'
 TreeConstants = require '../constants/TreeConstants.coffee'
 
-_branches = []
+_data =
+  branches: []
 
 CHANGE_EVENT = 'change'
 
 TreeStore = assign {}, EventEmitter.prototype,
   getBranches: ->
-    _branches
+    _data.branches
 
   emitChange: ->
     @emit CHANGE_EVENT
@@ -23,7 +24,7 @@ TreeStore = assign {}, EventEmitter.prototype,
 AppDispatcher.register (action) ->
   switch action.actionType
     when TreeConstants.RECEIVE_BRANCHES
-      _branches = action.data
+      _data.branches = action.data
       TreeStore.emitChange()
 
 

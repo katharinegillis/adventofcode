@@ -1,12 +1,11 @@
 React = require 'react'
+ReactPropTypes = React.PropTypes
 
 class TotalStars extends React.Component
-	constructor: (props) ->
-		super props
-		@state =
-			value: 0
+	@propTypes:
+		totalStars: ReactPropTypes.number.isRequired
 
 	render: ->
-		<span className="star-count">{@state.value}*</span>
+		<span className="star-count">{@props.totalStars}*</span>
 
 module.exports = TotalStars
