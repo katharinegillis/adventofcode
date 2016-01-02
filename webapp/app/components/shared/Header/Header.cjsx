@@ -1,10 +1,10 @@
 React         = require 'react'
 TotalStars    = require './TotalStars.cjsx'
-HeaderStore   = require '../stores/HeaderStore.coffee'
-HeaderActions = require '../actions/HeaderActions.coffee'
+HeaderStore   = require '../../../stores/HeaderStore.coffee'
+HeaderActions = require '../../../actions/HeaderActions.coffee'
 
 getHeaderState = () ->
-	return total_stars: HeaderStore.getTotalStars()
+	total_stars: HeaderStore.getTotalStars()
 
 class Header extends React.Component
 	constructor: (props) ->

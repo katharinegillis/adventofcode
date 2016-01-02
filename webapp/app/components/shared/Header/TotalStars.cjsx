@@ -1,4 +1,4 @@
-React = require 'react'
+React          = require 'react'
 ReactPropTypes = React.PropTypes
 
 class TotalStars extends React.Component

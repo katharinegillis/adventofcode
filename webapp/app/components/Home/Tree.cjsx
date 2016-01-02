@@ -1,7 +1,7 @@
 React       = require 'react'
 Branch      = require './Branch.cjsx'
-TreeStore   = require '../stores/TreeStore.coffee'
-TreeActions = require '../actions/TreeActions.coffee'
+TreeStore   = require '../../stores/TreeStore.coffee'
+TreeActions = require '../../actions/TreeActions.coffee'
 
 getTreeState = () ->
 	return branches: TreeStore.getBranches()
@@ -10,7 +10,7 @@ class Tree extends React.Component
 	constructor: (props) ->
 		super props
 		@state = getTreeState()
-		@onChange = @onChange.bind(this)
+		@onChange = @onChange.bind this
 
 	componentDidMount: ->
 		TreeStore.addChangeListener @onChange
@@ -27,7 +27,7 @@ class Tree extends React.Component
 			return null
 
 		branches = []
-		branches.push <Branch key={key} day={branch.day} count={branch.count} /> for branch, key in @state.branches
+		branches.push <Branch key={key} dayId={branch.day} count={branch.count} /> for branch, key in @state.branches
 
 		<pre className="tree">
 			{branches}

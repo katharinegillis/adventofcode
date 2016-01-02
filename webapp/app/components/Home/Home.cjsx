@@ -1,6 +1,6 @@
 React  = require 'react'
-Header = require './Header.cjsx'
-Main  = require './Main.cjsx'
+Header = require '../shared/Header/Header.cjsx'
+Main   = require './Main.cjsx'
 
 class Home extends React.Component
 	render: ->
