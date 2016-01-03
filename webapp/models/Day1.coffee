@@ -2,7 +2,7 @@ Day = require './abstract/Day.coffee'
 
 class Day1 extends Day
   puzzle1Completed: true
-  puzzle2Completed: false
+  puzzle2Completed: true
   name: 'Not Quite Lisp'
 
   getPuzzle1Inputs: ->
