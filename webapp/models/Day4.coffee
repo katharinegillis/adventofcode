@@ -3,7 +3,7 @@ Crypto = require 'crypto'
 
 class Day4 extends Day
   puzzle1Completed: true
-  puzzle2Completed: false
+  puzzle2Completed: true
   name: 'The Ideal Stocking Stuffer'
 
   getPuzzle1Inputs: ->
