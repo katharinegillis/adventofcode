@@ -1,19 +1,22 @@
 Request = require 'request'
+Url     = require 'url'
+
+config = require '../config/config.coffee'
 
 module.exports =
   getDay: (dayId, callback) ->
-    # TODO Make a request to an external API for the data.
-    if dayId is 25
-      day =
-        title: "Not Quite Lisp"
-        puzzles: [
-          {part: 1, inputs: [
-            {label: 'Instructions', name: 'instructions', type: 'text'},
-            {label: 'Textarea', name: 'textarea', type: 'textarea'}
-          ], code: 'return 12345;'},
-          {part: 2, inputs: [], code: 'return 4321;'}
-        ]
-    else
-      day = {}
+    Request.get {
+      url: Url.resolve config.base_url, '/api/days/' + dayId
+    }, (error, response, body) ->
+      if not error and response.statusCode is 200
+        body = JSON.parse body
+        callback null, body.day
+      else if not error and response.statusCode is 404
+        callback null, {}
+      else
+        if not error
+          error =
+            statusCode: response.statusCode
+            body: body
 
-    callback(null, day)
+        callback error, null

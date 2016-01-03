@@ -8,7 +8,6 @@ Promise.promisifyAll DayAPI
 
 DayActions =
   getDay: (dayId) ->
-    console.log dayId
     AppDispatcher.dispatch actionType: DayConstants.GET_DAY
     DayAPI.getDayAsync dayId
       .then (day) ->

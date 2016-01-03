@@ -17,6 +17,7 @@ routesConfig = (app) ->
   app.get '/api/stars/count', stars.count
 
   app.get '/api/days', days.index
+  app.get '/api/days/:dayId', days.view
 
   # Error routes.
   # Set up error logging.

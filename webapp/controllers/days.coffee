@@ -13,7 +13,42 @@ controllerFactory = (app) ->
           day: index
           count: count
 
-      res.json(branches: branches)
+      res.json branches: branches
+
+    view: (req, res) ->
+      dayId = req.params.dayId
+
+      days = app.get 'models'
+      if not days['Day' + dayId]?
+        res.sendStatus(404)
+        return
+
+      day = new days['Day' + dayId]()
+      puzzles = []
+
+      try
+        day.getPuzzle1Inputs()
+        puzzle1 =
+          inputs: day.getPuzzle1Inputs()
+          part: 1
+          code: day.getPuzzle1Code()
+      catch ex
+
+      puzzles.push puzzle1 if puzzle1?
+
+      try
+        day.getPuzzle2Inputs()
+        puzzle2 =
+          inputs: day.getPuzzle2Inputs()
+          part:2
+          code: day.getPuzzle2Code()
+      catch ex
+
+      puzzles.push puzzle2 if puzzle2?
+
+      res.json day:
+        title: day.getTitle()
+        puzzles: puzzles
 
   controller
 

@@ -1,6 +1,8 @@
 class Day
   puzzle1Completed: false
   puzzle2Completed: false
+  name: ''
+
   getStars: ->
     if @puzzle1Completed and @puzzle2Completed
       2
@@ -8,6 +10,9 @@ class Day
       1
     else
       0
+
+  getTitle: ->
+    @name
 
   getPuzzle1Inputs: () ->
     throw "Not implemented"
