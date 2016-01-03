@@ -16,7 +16,7 @@ envConfig = require './env/' + environment
 # Set up the default configuration.
 defaults =
   root: join __dirname, '..'
-  baseurl: process.env.BASE_URL
+  base_url: process.env.BASE_URL
   logger:
     transports: [
       new winston.transports.Console {

@@ -16,13 +16,27 @@ source       = require 'vinyl-source-stream'
 browserify   = require 'browserify'
 watchify     = require 'watchify'
 uglify       = require 'gulp-uglify'
+envify       = require 'envify/custom'
+fs           = require 'fs'
+join         = require('path').join
+
+process.env.NODE_ENV = process.env.NODE_ENV or 'development'
+
+# Load up the environmental variables for the dev environment.
+if process.env.NODE_ENV is 'development'
+	envFile = join __dirname, 'config/env/env.json'
+
+	if fs.existsSync envFile
+		env = fs.readFileSync envFile, 'utf-8'
+		env = JSON.parse env
+		for key, value of env
+			process.env[key] = value
 
 # Determine whether or not this is the production environment.
 production = process.env.NODE_ENV is 'production'
 
 # List out the browser app dependencies.
 dependencies = [
-
 ]
 
 # Compile the third-party JS libraries into a single file.
@@ -48,6 +62,11 @@ gulp.task 'browserify', ['browserify-vendor'], () ->
 	return browserify 'app/main.cjsx'
 		.external dependencies
 		.transform 'coffee-reactify'
+		.transform envify(
+			_: 'purge'
+			NODE_ENV: process.env.NODE_ENV,
+			BASE_URL: process.env.BASE_URL
+		)
 		.bundle()
 		.pipe source('bundle.js')
 		.pipe gulpif(production, streamify(uglify(mangle: false)))
@@ -68,6 +87,11 @@ gulp.task 'browserify-watch', ['browserify-vendor'], () ->
 	bundler = watchify browserify('app/main.cjsx', watchify.args)
 	bundler.external dependencies
 	bundler.transform 'coffee-reactify'
+	bundler.transform envify(
+		_: 'purge'
+		NODE_ENV: process.env.NODE_ENV,
+		BASE_URL: process.env.BASE_URL
+	)
 	bundler.on 'update', rebundle
 	return rebundle()
 

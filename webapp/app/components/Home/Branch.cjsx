@@ -5,7 +5,7 @@ Link           = require('react-router').Link
 class Branch extends React.Component
 	@propTypes:
 		count: ReactPropTypes.number.isRequired
-		day: ReactPropTypes.number.isRequired
+		dayId: ReactPropTypes.number.isRequired
 
 	render: ->
 		switch @props.count
