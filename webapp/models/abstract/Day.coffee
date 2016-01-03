@@ -1,4 +1,4 @@
-class Puzzle
+class Day
   puzzle1Completed: false
   puzzle2Completed: false
   getStars: ->
@@ -26,3 +26,5 @@ class Puzzle
 
   getPuzzle2Code: () ->
     throw "Not implemented"
+
+module.exports = Day

@@ -19,9 +19,9 @@ port = process.env.PORT or 3000
 models = {}
 for file in fs.readdirSync(join(__dirname, 'models'))
   if file.indexOf('.coffee') isnt -1
-    model = require(join(__dirname, 'models', file))(app)
-    Promise.promisifyAll model
-    models[model.name] = model
+    model = require(join(__dirname, 'models', file))
+    Promise.promisifyAll model.instance
+    models[model.name] = model.instance
 app.set 'models', models
 
 # Bootstrap the application settings.

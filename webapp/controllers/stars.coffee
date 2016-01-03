@@ -2,8 +2,10 @@ controllerFactory = (app) ->
   controller =
     count: (req, res) ->
       count = 0
-      puzzles = app.get 'models'
-      count = count + puzzle.getStars() for puzzle in puzzles
+      days = app.get 'models'
+      for index in Object.keys(days)
+        day = new days[index]()
+        count = count + day.getStars()
 
       res.json(count: count)
 

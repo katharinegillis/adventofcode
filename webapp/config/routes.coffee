@@ -9,11 +9,14 @@ expressWinston = require 'express-winston'
 routesConfig = (app) ->
   index = require('../controllers/index')(app)
   stars = require('../controllers/stars')(app)
+  days  = require('../controllers/days')(app)
 
   # Main routes.
   app.get '/', index.index
 
   app.get '/api/stars/count', stars.count
+
+  app.get '/api/days', days.index
 
   # Error routes.
   # Set up error logging.
