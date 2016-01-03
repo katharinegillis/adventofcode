@@ -16,7 +16,7 @@ controllerFactory = (app) ->
         res.sendStatus(404)
         return
 
-      answer = day.runPuzzle1 inputs
+      answer = day['runPuzzle' + puzzleId](inputs)
 
       res.json answer: answer
 

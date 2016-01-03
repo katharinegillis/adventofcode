@@ -27,7 +27,6 @@ controllerFactory = (app) ->
       puzzles = []
 
       try
-        day.getPuzzle1Inputs()
         puzzle1 =
           inputs: day.getPuzzle1Inputs()
           part: 1
@@ -37,10 +36,9 @@ controllerFactory = (app) ->
       puzzles.push puzzle1 if puzzle1?
 
       try
-        day.getPuzzle2Inputs()
         puzzle2 =
           inputs: day.getPuzzle2Inputs()
-          part:2
+          part: 2
           code: day.getPuzzle2Code()
       catch ex
 
