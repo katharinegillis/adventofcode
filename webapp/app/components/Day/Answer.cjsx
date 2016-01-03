@@ -25,6 +25,7 @@ class Answer extends React.Component
 		@setState getAnswerState @props.dayId, @props.puzzleId
 
 	render: ->
+		console.log @state
 		if @state.value is ''
 			return null
 
