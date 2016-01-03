@@ -8,7 +8,6 @@ Promise.promisifyAll AnswerAPI
 
 AnswerActions =
   getAnswer: (dayId, puzzleId, data) ->
-    console.log dayId
     AppDispatcher.dispatch actionType: AnswerConstants.GET_ANSWER
     AnswerAPI.getAnswerAsync dayId, puzzleId, data
       .then (answer) ->

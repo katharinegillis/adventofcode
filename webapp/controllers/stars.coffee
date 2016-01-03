@@ -7,7 +7,7 @@ controllerFactory = (app) ->
         day = new days[index]()
         count = count + day.getStars()
 
-      res.json(count: count)
+      res.json count: count
 
   controller
 

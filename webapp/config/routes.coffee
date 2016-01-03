@@ -7,9 +7,10 @@
 expressWinston = require 'express-winston'
 
 routesConfig = (app) ->
-  index = require('../controllers/index')(app)
-  stars = require('../controllers/stars')(app)
-  days  = require('../controllers/days')(app)
+  index   = require('../controllers/index')(app)
+  stars   = require('../controllers/stars')(app)
+  days    = require('../controllers/days')(app)
+  answers = require('../controllers/answers')(app)
 
   # Main routes.
   app.get '/', index.index
@@ -18,6 +19,8 @@ routesConfig = (app) ->
 
   app.get '/api/days', days.index
   app.get '/api/days/:dayId', days.view
+
+  app.post '/api/answers/:dayId/:puzzleId', answers.run
 
   # Error routes.
   # Set up error logging.
