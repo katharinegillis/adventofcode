@@ -13,24 +13,16 @@ class Day7 extends Day
 
 	runPuzzle1: (inputs) ->
 		instructions = inputs.instructions.split '\n'
-		wireValues = {}
 		wireFunctions = {}
 
 		wireAssignmentPattern = /^(\w+) -> (\w+)$/i
-		andOrGatePattern = /^(\w+) (AND|OR) (\w+) -> ([a-z]+)$/i
-		shiftGatePattern = /^(\w+) (RSHIFT|LSHIFT) (\d+) -> (\w+)$/i
-		notGatePattern = /^NOT (\w+) -> (\w+)$/i
+		andOrGatePattern = /^(\w+) (AND|OR) (\w+) -> (\w+)$/i
 
-		getWireValue = (wire) ->
-			return wireValues[wire] if wireValues[wire]?
-
-			console.log wire
-			console.log wireFunctions[wire]
-			wireFunctions[wire]()
-
-		checkSourceWire = (wire) ->
-			if not isNaN parseInt(wire) and not wireValues[wire]?
-				wireValues[wire] = wire
+		checkSourceWire = (sourceWire) ->
+			if /^\d+$/.test(sourceWire)
+				signal = parseInt sourceWire
+				wireFunctions[sourceWire] = do (signal) -> ->
+					signal
 
 		for instruction in instructions
 			if wireAssignmentPattern.test instruction
@@ -40,8 +32,11 @@ class Day7 extends Day
 
 				checkSourceWire sourceWire
 
-				wireFunctions[targetWire] = () ->
-					getWireValue sourceWire
+				wireFunctions[targetWire] = do (sourceWire, targetWire) -> ->
+					result = wireFunctions[sourceWire]()
+					wireFunctions[targetWire] = () ->
+						result
+					result
 			else if andOrGatePattern.test instruction
 				matches = andOrGatePattern.exec instruction
 				sourceWireA = matches[1]
@@ -52,42 +47,14 @@ class Day7 extends Day
 				checkSourceWire sourceWireA
 				checkSourceWire sourceWireB
 
-				switch operator
-					when 'AND'
-						wireFunctions[targetWire] = () ->
-							getWireValue(sourceWireA) & getWireValue(sourceWireB)
-					when 'OR'
-						wireFunctions[targetWire] = () ->
-							getWireValue(sourceWireA) | getWireValue(sourceWireB)
-			else if shiftGatePattern.test instruction
-				matches = shiftGatePattern.exec instruction
-				sourceWire = matches[1]
-				operator = matches[2]
-				shiftAmount = parseInt matches[3]
-				targetWire = matches[4]
-
-				checkSourceWire sourceWire
-
-				switch operator
-					when 'RSHIFT'
-						wireFunctions[targetWire] = () ->
-							getWireValue(sourceWire) >> shiftAmount
-					when 'LSHIFT'
-						wireFunctions[targetWire] = () ->
-							getWireValue(sourceWire) << shiftAmount
-			else if notGatePattern.test instruction
-				matches = notGatePattern.exec instruction
-				sourceWire = matches[1]
-				targetWire = matches[2]
-
-				checkSourceWire sourceWire
-
-				wireFunctions[targetWire] = () ->
-					~ getWireValue(sourceWire)
-
-		console.log wireFunctions
+				wireFunctions[targetWire] = do (sourceWireA, sourceWireB, targetWire, operator) -> ->
+					result = if operator is 'AND' then wireFunctions[sourceWireA]() & wireFunctions[sourceWireB]() else wireFunctions[sourceWireA]() | wireFunctions[sourceWireB]()
+					wireFunctions[targetWire] = () ->
+						result
+					result
 
 		wireFunctions[inputs.wire]()
+
 
 	getPuzzle1Code: ->
 		code = [

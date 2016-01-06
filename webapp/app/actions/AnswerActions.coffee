@@ -14,5 +14,6 @@ AnswerActions =
         AnswerServerActions.receiveAnswer dayId, puzzleId, answer
       .catch (error) ->
         console.log error
+        AnswerServerActions.receiveAnswer dayId, puzzleId, ''
 
 module.exports = AnswerActions
