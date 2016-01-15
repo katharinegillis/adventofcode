@@ -2,7 +2,7 @@ Day = require './abstract/Day.coffee'
 
 class Day14 extends Day
   puzzle1Completed: true
-  puzzle2Completed: false
+  puzzle2Completed: true
   name: 'Reindeer Olympics'
 
   getPuzzle1Inputs: () ->
@@ -22,12 +22,10 @@ class Day14 extends Day
       numIntervals = Math.floor time / interval
 
       distance = numIntervals * reindeer.flying_time * reindeer.speed
-      if interval - remainder > reindeer.flying_time
+      if remainder > reindeer.flying_time
         distance += reindeer.flying_time * reindeer.speed
       else
-        distance += (interval - remainder) * reindeer.speed
-
-      console.log distance
+        distance += remainder * reindeer.speed
 
       maxDistance = distance if maxDistance < distance
 
@@ -50,32 +48,35 @@ class Day14 extends Day
 
     getFastestReindeer = (curretTime) ->
       maxDistance = -1
-      fastestName = ''
+      fastestNames = []
       for name, reindeer of reindeers
         interval = reindeer.flying_time + reindeer.resting_time
         remainder = curretTime % interval
         numIntervals = Math.floor curretTime / interval
 
         distance = numIntervals * reindeer.flying_time * reindeer.speed
-        if interval - remainder > reindeer.flying_time
+        if remainder > reindeer.flying_time
           distance += reindeer.flying_time * reindeer.speed
         else
-          distance += (interval - remainder) * reindeer.speed
+          distance += remainder * reindeer.speed
 
         if maxDistance < distance
           maxDistance = distance
-          fastestName = name
+          fastestNames = [name]
+        else if maxDistance is distance
+          fastestNames.push name
 
-      fastestName
+      fastestNames
 
     reindeer_points = {}
     for i in [1..time]
-      fastestReindeer = getFastestReindeer i
+      fastestReindeers = getFastestReindeer i
 
-      if not reindeer_points.hasOwnProperty(fastestReindeer)
-        reindeer_points[fastestReindeer] = 0
+      for reindeer in fastestReindeers
+        if not reindeer_points.hasOwnProperty(reindeer)
+          reindeer_points[reindeer] = 0
 
-      reindeer_points[fastestReindeer] += 1
+        reindeer_points[reindeer] += 1
 
     maxPoints = -1
     for reindeer, points of reindeer_points
