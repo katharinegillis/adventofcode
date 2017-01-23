@@ -1,5 +1,3 @@
-keyMirror = require 'keyMirror'
-
-module.exports = keyMirror
-  GET_DAY: null
-  RECEIVE_DAY: null
+module.exports =
+  GET_DAY: 'GET_DAY'
+  RECEIVE_DAY: 'RECEIVE_DAY'
