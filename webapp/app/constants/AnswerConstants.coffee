@@ -1,5 +1,3 @@
-keyMirror = require 'keyMirror'
-
-module.exports = keyMirror
-  GET_ANSWER: null
-  RECEIVE_ANSWER: null
+module.exports = 
+  GET_ANSWER: 'GET_ANSWER'
+  RECEIVE_ANSWER: 'RECEIVE_ANSWER'
