@@ -1,5 +1,3 @@
-keyMirror = require 'keyMirror'
-
-module.exports = keyMirror
-  GET_TOTAL_STARS: null
-  RECEIVE_TOTAL_STARS: null
+module.exports = 
+  GET_TOTAL_STARS: 'GET_TOTAL_STARS'
+  RECEIVE_TOTAL_STARS: 'RECEIVE_TOTAL_STARS'
